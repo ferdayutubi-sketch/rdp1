@@ -15,7 +15,9 @@ jobs:
       run: |
         choco install ngrok -y
     - name: Jalankan Koneksi RDP
+      env:
+        NGROK_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-        ngrok tcp --authtoken 3G3zbrcEJiVGx7124x1FdBRf1vz_5wSwaAR7NZeV6 3389
+        ngrok tcp --authtoken $env:NGROK_TOKEN 3389
