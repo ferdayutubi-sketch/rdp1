@@ -1,3 +1,20 @@
-- name: Jalankan Tunnel & Dapatkan Link RDP
+name: RDP Gratis Instan Pinggy
+
+on:  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Mengaktifkan RDP Windows
+      run: |
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    - name: Membuat Akun User RDP
+      run: |
+        net user youtubeuser YoutubeRDP123! /add
+        net localgroup administrators youtubeuser /add
+    - name: Jalankan Tunnel & Dapatkan Link RDP
       run: |
         ssh -tt -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 rdp@a.pinggy.io
