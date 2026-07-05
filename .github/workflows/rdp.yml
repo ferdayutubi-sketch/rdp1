@@ -11,12 +11,11 @@ jobs:
       run: |
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-    - name: Download & Setup Ngrok Tunnel
+    - name: Download Ngrok Executable
       run: |
-        Invoke-WebRequest -Uri "https://equinox.io" -OutFile "ngrok.zip"
-        Expand-Archive -Path "ngrok.zip" -DestinationPath "."
+        Invoke-WebRequest -Uri "https://equinox.io" -OutFile "ngrok.exe"
     - name: Jalankan Koneksi RDP
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-        ./ngrok tcp --authtoken 3G3zbrcEJivGX7124xlFdBRf1Vz_5w5WaAR7NZeV6bDkk8te2
+        ./ngrok.exe tcp --authtoken 3G3zbrcEJivGX7124xlFdBRf1Vz_5w5WaAR7NZeV6bDkk8te2 3389
