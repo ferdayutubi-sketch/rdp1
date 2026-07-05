@@ -7,14 +7,13 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Download Cloudflare Tunnel
+    - name: Download Cloudflare Standalone Executable
       run: |
-        Invoke-WebRequest -Uri "https://github.com" -OutFile "cloudflared.msi"
-        Start-Process msiexec.exe -ArgumentList '/i cloudflared.msi /quiet /qn' -Wait
+        Invoke-WebRequest -Uri "https://github.com" -OutFile "cloudflared.exe"
     - name: Configure RDP User
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
     - name: Jalankan Tunnel & Dapatkan Link RDP
       run: |
-        & "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url rdp://localhost:3389
+        ./cloudflared.exe tunnel --url rdp://localhost:3389
