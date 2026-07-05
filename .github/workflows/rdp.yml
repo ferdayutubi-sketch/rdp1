@@ -7,6 +7,10 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: Enable Remote Desktop
+      run: |
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
     - name: Install Cloudflare via Choco
       run: |
         choco install cloudflared -y
