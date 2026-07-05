@@ -1,4 +1,4 @@
-name: RDP Ngrok Gratis
+name: RDP Gratis Instan Tmate
 
 on:  
   workflow_dispatch:
@@ -11,12 +11,9 @@ jobs:
       run: |
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-    - name: Pasang Ngrok via Choco
-      run: |
-        choco install ngrok -y
-    - name: Jalankan Koneksi RDP
+    - name: Membuat Akun User RDP
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-        ngrok config add-authtoken 3G3zbrcEJiVGx7124x1FdBRf1vz_5wSwaAR7NZeV6
-        ngrok tcp 3389
+    - name: Jalankan Tmate Tunnel Gratis
+      uses: mxschmitt/action-tmate@v3
