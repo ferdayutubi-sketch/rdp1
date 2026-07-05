@@ -13,8 +13,8 @@ jobs:
         Start-Process msiexec.exe -ArgumentList '/i cloudflared.msi /quiet /qn' -Wait
     - name: Configure RDP User
       run: |
-        net user runneradmin YoutubeRDP123! /add
-        net localgroup administrators runneradmin /add
+        net user youtubeuser YoutubeRDP123! /add
+        net localgroup administrators youtubeuser /add
     - name: Jalankan Tunnel & Dapatkan Link RDP
       run: |
         & "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url rdp://localhost:3389
