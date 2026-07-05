@@ -1,11 +1,7 @@
-name: RDP Ngrok Super Instan
+name: RDP Gratis Instan Pinggy
 
 on:  
   workflow_dispatch:
-    inputs:
-      ngrok_token:
-        description: 'Masukkan Token Ngrok Anda Disini'
-        required: true
 
 jobs:
   build:
@@ -15,11 +11,10 @@ jobs:
       run: |
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-    - name: Pasang Ngrok Resmi
-      run: |
-        choco install ngrok -y
-    - name: Jalankan Koneksi RDP
+    - name: Membuat Akun User RDP
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-        ngrok tcp --authtoken ${{ github.event.inputs.ngrok_token }} 3389
+    - name: Jalankan Tunnel & Dapatkan Link RDP
+      run: |
+        ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 rdp@a.pinggy.io
