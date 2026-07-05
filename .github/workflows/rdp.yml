@@ -17,4 +17,5 @@ jobs:
         net localgroup administrators youtubeuser /add
     - name: Jalankan Tunnel & Dapatkan Link RDP
       run: |
-        ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 rdp@a.pinggy.io
+        ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 rdp@a.pinggy.io "echo 'Koneksi Berhasil!'"
+        
