@@ -1,23 +1,22 @@
-name: RDP Gratis Instan
+name: RDP Ngrok Gratis
 
-on: 
+on:  
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Enable Remote Desktop
+    - name: Mengaktifkan RDP Windows
       run: |
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-    - name: Install Cloudflare via Choco
+    - name: Download & Setup Ngrok Tunnel
       run: |
-        choco install cloudflared -y
-    - name: Configure RDP User
+        Invoke-WebRequest -Uri "https://equinox.io" -OutFile "ngrok.zip"
+        Expand-Archive -Path "ngrok.zip" -DestinationPath "."
+    - name: Jalankan Koneksi RDP
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-    - name: Jalankan Tunnel & Dapatkan Link RDP
-      run: |
-        cloudflared tunnel --url rdp://localhost:3389
+        ./ngrok tcp --authtoken 3G3zbrcEJivGX7124xlFdBRf1Vz_5w5WaAR7NZeV6bDkk8te2
