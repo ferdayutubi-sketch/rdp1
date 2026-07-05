@@ -1,0 +1,21 @@
+name: RDP Gratis Instan
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Download Cloudflare Tunnel
+      run: |
+        Invoke-WebRequest -Uri "https://github.com" -OutFile "cloudflared.msi"
+        Start-Process msiexec.exe -ArgumentList '/i cloudflared.msi /quiet /qn' -Wait
+    - name: Configure RDP User
+      run: |
+        net user runneradmin YoutubeRDP123! /add
+        net localgroup administrators runneradmin /add
+    - name: Jalankan Tunnel & Dapatkan Link RDP
+      run: |
+        & "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url rdp://localhost:3389
+      
