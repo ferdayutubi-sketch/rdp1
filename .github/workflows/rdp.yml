@@ -18,4 +18,3 @@ jobs:
     - name: Jalankan Tunnel & Dapatkan Link RDP
       run: |
         & "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url rdp://localhost:3389
-      
