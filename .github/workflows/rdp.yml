@@ -15,6 +15,9 @@ jobs:
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-    - name: Jalankan Tunnel & Dapatkan Link RDP
+    - name: Jalankan Tunnel & Cetak Link RDP
       run: |
+        Start-Process ssh -ArgumentList "-tt -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 rdp@a.pinggy.io" -RedirectStandardOutput "link.txt"
+        Start-Sleep -Seconds 10
+        Get-Content link.txt
         ssh -tt -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 rdp@a.pinggy.io
