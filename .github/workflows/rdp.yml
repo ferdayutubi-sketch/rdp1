@@ -1,20 +1,25 @@
-name: RDP Gratis Instan Pinggy
+name: RDP Upload YouTube Estafet
 
-on:  
+on: 
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Mengaktifkan RDP Windows
+    - name: 1. Konfigurasi Sistem RDP Windows
       run: |
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-    - name: Membuat Akun User RDP
+    - name: 2. Buat Akun User Baru
       run: |
         net user youtubeuser YoutubeRDP123! /add
         net localgroup administrators youtubeuser /add
-    - name: Jalankan Tunnel & Dapatkan Link RDP
+    - name: 3. Unduh & Jalankan Link Tunnel Instan
       run: |
-        ssh -p 443 -R0:127.0.0.1:3389 -o StrictHostKeyChecking=no -o ServerAliveInterval=30 YhYKRGooaAr@free.pinggy.io
+        Invoke-WebRequest -Uri "https://github.com" -OutFile "cloudflared.msi"
+        Start-Process msiexec.exe -ArgumentList '/i cloudflared.msi /quiet /qn' -Wait
+        echo "============================================="
+        echo "TUNGGU 10 DETIK, LALU CARI LINK DI BAWAH INI:"
+        echo "============================================="
+        & "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url rdp://localhost:3389
