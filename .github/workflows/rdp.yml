@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       ngrok_token:
-        description: 3G3zbrcEJivGX7124xlFdBRf1Vz_5w5WaAR7NZeV6bDkk8te2
+        description: 'Masukkan Token Ngrok Anda Disini'
         required: true
 
 jobs:
